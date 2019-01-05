@@ -68,15 +68,18 @@ public class View extends JPanel {
             g.drawString(model.getPaddleScore(1) + " : " + model.getPaddleScore(2), (Pong.screenwidht/2)-50, Pong.screenhight-35);
             g.setColor(Color.GREEN);
             g.setFont(new Font("Arial", 1, 20));
-            g.drawString("w = up ", 10, Pong.screenhight-45);
-            g.drawString("s = downe ", 10, Pong.screenhight-25);
-            g.drawString("w = up ", 10, Pong.screenhight-45);
+           
+            g.drawString("s = downe ", 10, Pong.screenhight-30);
+            g.drawString("w = up ", 10, Pong.screenhight-50);
             char c = '\u2193';
-            g.drawString(c+" = downe ", Pong.screenwidht-100, Pong.screenhight-25);
+            g.drawString(c+" = downe ", Pong.screenwidht-100, Pong.screenhight-30);
             char p = '\u2191';
-            g.drawString(p+" = up ", Pong.screenwidht-100, Pong.screenhight-45);
+            g.drawString(p+" = up ", Pong.screenwidht-100, Pong.screenhight-50);
+            g.setColor(Color.BLUE);
+            g.drawString("Speed: "+(String) Start.jComboBox1.getSelectedItem(),Pong.screenwidht-200, Pong.screenhight-30);
             if (Model.presstp == false){
                 g.setColor(Color.RED);
+            
             g.setFont(new Font("Arial", 1, 40));
             g.drawString("Press alt+ P oder cmd P zum Start ",10, Pong.screenhight/4);
             }

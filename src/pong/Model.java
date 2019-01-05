@@ -8,13 +8,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JOptionPane;
-import javax.swing.Timer;
+//import javax.swing.Timer;
 
 public class Model {
 
@@ -32,7 +35,7 @@ public class Model {
     double incline = -0.5;
     List<Entity> entities = new ArrayList<Entity>(20);
     View view;
-    public static int counter = 0;
+    public static int counter = 1;
     public int timercounter = 0;
 
     public Model(View view) {
@@ -52,41 +55,9 @@ public class Model {
                 if (presstp == false && ke.getModifiers() == InputEvent.ALT_MASK && ke.getKeyChar() == 'p' || presstp == false && ke.getKeyCode() == KeyEvent.VK_P && ke.getModifiers() == InputEvent.META_MASK && ke.getID() == KeyEvent.KEY_PRESSED) {
                     startTimer(counter);
                     presstp = true;
-                    System.out.println(counter);
-                }
-                
-                if (timercounter >= 500 && timercounter <= 505){
-                    //startTimer(counter);
-                    timer.start();
-                }
-
-                if (ke.getModifiers() == InputEvent.ALT_MASK && ke.getKeyChar() == 'x' || ke.getModifiers() == InputEvent.META_MASK && ke.getKeyChar() == 'x' && ke.getID() == KeyEvent.KEY_PRESSED) {
-                    timer.stop();
-
-                    if (counter < 1000) {
-                        counter = counter + 100;
-                    }
-                    startTimer(counter);
-                    timer.start();
-                    System.out.println("nr1 : " + counter);
-                }
-                if (ke.getModifiers() == InputEvent.ALT_MASK && ke.getKeyChar() == 'y' || ke.getModifiers() == InputEvent.META_MASK && ke.getKeyChar() == 'y' && ke.getID() == KeyEvent.KEY_PRESSED) {
-                    timer.stop();
                     
-                        counter = counter - 100;
-                    
-                    startTimer(counter);
-                    timer.start();
-                    System.out.println("nr2 : " + counter);
                 }
-                if (ke.getModifiers() == InputEvent.ALT_MASK && ke.getKeyChar() == 'w' || ke.getModifiers() == InputEvent.META_MASK && ke.getID() == KeyEvent.KEY_PRESSED && ke.getKeyCode() == KeyEvent.VK_W) {
-                    if (timer.isRunning()) {
-                        timer.stop();
-                    } else {
-                        timer.start();
-                    }
 
-                }
                 return false;
             }
         });
@@ -94,18 +65,23 @@ public class Model {
     }
 
     public void startTimer(int time) {
-
-        timer = new Timer(time, new ActionListener() {
-
+    
+       String speed = (String) Start.jComboBox1.getSelectedItem();
+    int speed2 = Integer.valueOf(speed);
+        System.out.println(speed2);
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
             @Override
-            public void actionPerformed(ActionEvent arg0) {
+            public void run() {
                 update(view.getBounds());
                 view.repaint();
                 timercounter++;
-                System.out.println(timercounter);
+                
+
             }
-        });
-        timer.start();
+
+        }, 0,speed2);
+
     }
 
     public void update(Rectangle bounds) {
@@ -132,15 +108,17 @@ public class Model {
 
         if (paddle1.getScore() > 7) {
             JOptionPane.showMessageDialog(view, "Player 1 has won!");
+            presstp = false;
             paddle1.resetScore();
             paddle2.resetScore();
-            timer.stop();
+            timer.cancel();
 
         } else if (paddle2.getScore() > 7) {
             JOptionPane.showMessageDialog(view, "Player 2 has won!");
-            timer.stop();
+            presstp = false;
             paddle1.resetScore();
             paddle2.resetScore();
+            timer.cancel();
 
         }
 
@@ -185,7 +163,7 @@ public class Model {
             direction = !direction;
 
             ballX = View.bountswidht / 2;
-            ballY = View.bountshight / 2;
+            ballY =  Math.random()*(View.bountshight -60);
 
         }
         if (ball.getLocation().x > view.getBounds().x + view.getBounds().width) {
@@ -194,7 +172,7 @@ public class Model {
             direction = !direction;
 
             ballX = View.bountswidht / 2;
-            ballY = View.bountshight / 2;
+            ballY = Math.random()*(View.bountshight -60);
 
         }
         if (ball.getLocation().y < view.getBounds().y) {
