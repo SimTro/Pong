@@ -5,6 +5,9 @@
  */
 package pong;
 
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+
 /**
  *
  * @author slomm
@@ -15,11 +18,17 @@ public class Start extends javax.swing.JFrame {
     public static int jtext2;
     public static int screenwidht = 0;
     public static int screenhight = 0;
-
+    
+    GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+int width = gd.getDisplayMode().getWidth();
+int height = gd.getDisplayMode().getHeight();
+String widhts = Integer.toString(width);
+String heights = Integer.toString(height);
     /**
      * Creates new form Start
      */
     public Start() {
+        
         initComponents();
     }
 
@@ -41,12 +50,13 @@ public class Start extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("StartFrame");
         setName("startframe"); // NOI18N
 
-        jLabel1.setText("Gebe die Spieldeld Größe an !");
+        jLabel1.setText("Gebe die Spielfeld Größe an !");
 
         jTextField1.setText("700");
 
@@ -63,7 +73,7 @@ public class Start extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText("mindestens 400x400");
+        jLabel4.setText("min: 400x400");
 
         jLabel5.setText("Speed:");
 
@@ -74,6 +84,8 @@ public class Start extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setText("max: " + widhts + " x " + heights);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -82,13 +94,19 @@ public class Start extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(45, 45, 45)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addGap(65, 65, 65)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2))
+                                .addGap(65, 65, 65)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(38, 38, 38)
+                                .addComponent(jLabel6)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -98,10 +116,7 @@ public class Start extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(157, 157, 157)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(131, 131, 131)
-                        .addComponent(jLabel4)))
+                        .addComponent(jButton1)))
                 .addGap(29, 29, 29))
         );
         layout.setVerticalGroup(
@@ -109,9 +124,11 @@ public class Start extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addComponent(jLabel1)
-                .addGap(49, 49, 49)
-                .addComponent(jLabel4)
-                .addGap(18, 18, 18)
+                .addGap(55, 55, 55)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
@@ -133,7 +150,7 @@ public class Start extends javax.swing.JFrame {
         jtext1 = Integer.valueOf(jTextField1.getText());
         jtext2 = Integer.valueOf(jTextField2.getText());
         
-        if (jtext1 >= 400 && jtext2>= 400) {
+        if (jtext1 >= 400 && jtext2 >= 400 && jtext1 <= width && jtext2 <= height) {
             setVisible(false);
             Pong.main();
         }
@@ -187,6 +204,7 @@ public class Start extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     public static javax.swing.JTextField jTextField1;
     public static javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
