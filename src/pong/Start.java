@@ -192,6 +192,7 @@ String heights = Integer.toString(height);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Start().setVisible(true);
+                
             }
         });
     }
