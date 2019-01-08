@@ -4,21 +4,20 @@ import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import javax.swing.JOptionPane;
-//import javax.swing.Timer;
 
+/**
+ *
+ * @author Melek Ayaz und Simon Trottberger
+ */
 public class Model {
 
     Paddle paddle1;
@@ -35,9 +34,14 @@ public class Model {
     double incline = -0.5;
     List<Entity> entities = new ArrayList<Entity>(20);
     View view;
+    public boolean timerstate;
+    boolean pause = false;
+    
+    
     public static int counter = 1;
-    public int timercounter = 0;
 
+    int selectetspeed = Integer.valueOf((String) Start.jComboBox1.getSelectedItem());
+    static int ingamespeed = Integer.valueOf((String) Start.jComboBox1.getSelectedItem());
     public Model(View view) {
 
         this.view = view;
@@ -52,36 +56,48 @@ public class Model {
             @Override
             public boolean dispatchKeyEvent(KeyEvent ke) {
 
-                if (presstp == false && ke.getModifiers() == InputEvent.ALT_MASK && ke.getKeyChar() == 'p' || presstp == false && ke.getKeyCode() == KeyEvent.VK_P && ke.getModifiers() == InputEvent.META_MASK && ke.getID() == KeyEvent.KEY_PRESSED) {
-                    startTimer(counter);
+                if (presstp == false && ke.getKeyCode() == KeyEvent.VK_P && ke.getID() == KeyEvent.KEY_PRESSED) {
+                    Timer();
+                    ingamespeed = selectetspeed;
                     presstp = true;
-                    
                 }
 
+                if (ingamespeed > 1 && ke.getKeyChar() == '-' ) { 
+                    ingamespeed--;
+                    timer.cancel();
+                    Timer();
+                }
+                if (ingamespeed < 20 && ke.getKeyChar() == '+' ) {
+                    ingamespeed ++ ;
+                    timer.cancel();
+                    Timer();
+
+                }
                 return false;
             }
         });
 
     }
 
-    public void startTimer(int time) {
-    
-       String speed = (String) Start.jComboBox1.getSelectedItem();
-    int speed2 = Integer.valueOf(speed);
-        System.out.println(speed2);
+    public void Timer() {
+
+        
         timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
+    
+        
+        
+        timer.schedule(new TimerTask() {
             @Override
             public void run() {
+                timerstate = true;
+                
                 update(view.getBounds());
                 view.repaint();
-                timercounter++;
-                
 
             }
 
-        }, 0,speed2);
-
+        }, 0, ingamespeed);
+        System.out.println(ingamespeed);
     }
 
     public void update(Rectangle bounds) {
@@ -163,7 +179,7 @@ public class Model {
             direction = !direction;
 
             ballX = View.bountswidht / 2;
-            ballY =  Math.random()*(View.bountshight -60);
+            ballY = Math.random() * (View.bountshight - 60);
 
         }
         if (ball.getLocation().x > view.getBounds().x + view.getBounds().width) {
@@ -172,7 +188,7 @@ public class Model {
             direction = !direction;
 
             ballX = View.bountswidht / 2;
-            ballY = Math.random()*(View.bountshight -60);
+            ballY = Math.random() * (View.bountshight - 60);
 
         }
         if (ball.getLocation().y < view.getBounds().y) {

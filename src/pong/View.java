@@ -15,6 +15,11 @@ import javax.swing.KeyStroke;
 import static pong.Pong.screenhight;
 import static pong.Pong.screenwidht;
 
+/**
+ *
+ * @author Melek Ayaz und Simon Trottberger 
+ */
+
 public class View extends JPanel {
     
     Model model;
@@ -76,12 +81,17 @@ public class View extends JPanel {
             char p = '\u2191';
             g.drawString(p+" = up ", Pong.screenwidht-100, Pong.screenhight-50);
             g.setColor(Color.BLUE);
-            g.drawString("Speed: "+(String) Start.jComboBox1.getSelectedItem(),Pong.screenwidht-200, Pong.screenhight-30);
+            g.drawString("Speed: "+ Model.ingamespeed ,Pong.screenwidht-200, Pong.screenhight-30);
+            g.setFont(new Font("Arial", 1, 15));
+            g.setColor(Color.MAGENTA);
+            g.drawString("+ = Speed + : "+ Model.ingamespeed ,Pong.screenwidht-310, Pong.screenhight-45);
+            g.drawString("- = Speed - : "+ Model.ingamespeed ,Pong.screenwidht-310, Pong.screenhight-25);
+            
             if (Model.presstp == false){
                 g.setColor(Color.RED);
             
             g.setFont(new Font("Arial", 1, 40));
-            g.drawString("Press alt+ P oder cmd P zum Start ",10, Pong.screenhight/4);
+            g.drawString("Press P for Start ",bountswidht/2-100, Pong.screenhight/4);
             }
             
         } else {

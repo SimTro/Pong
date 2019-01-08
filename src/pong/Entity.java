@@ -5,6 +5,10 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 
+/**
+ *
+ * @author Melek Ayaz und Simon Trottberger 
+ */
 
 public interface Entity {
     

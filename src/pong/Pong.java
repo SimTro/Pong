@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 
 /**
  *
- * @author Simon Trottberger
+ * @author Melek Ayaz und Simon Trottberger 
  */
 public class Pong {
 

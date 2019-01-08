@@ -6,6 +6,11 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 
+/**
+ *
+ * @author Melek Ayaz und Simon Trottberger 
+ */
+
 public class Ball implements Entity {
 
     Point location = new Point(0, 0);
